@@ -1,78 +1,114 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
-   <meta charset="UTF-8">
-   <title>1/5</title>
-   <style>
-     body {
-       margin: 0;
-       height: 100vh;
-       background: #000000; /* dark dark grey */
-       color: #e0e0e0;
-       font-family: monospace;
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-     }
- 
-     h1 {
-       margin-bottom: 20px;
-       text-align: center;
-       color: #dcdcdc;
-     }
- 
-     input[type="text"] {
-       padding: 10px;
-       font-size: 16px;
-       border: 1px solid #333;
-       border-radius: 4px;
-       outline: none;
-       width: 300px;
-       text-align: center;
-       background-color: #2a2a2a;
-       color: #ffffff;
-     }
- 
-     input[type="text"]::placeholder {
-       color: #888;
-     }
- 
-     #message {
-       margin-top: 20px;
-       display: none;
-     }
- 
-     #message a {
-       color: #87ff87;
-       text-decoration: none;
-     }
- 
-     #message a:hover {
-       text-decoration: underline;
-     }
-   </style>
- </head>
- <body>
-   <h1>if an object is split, but not broken, what is it?.</h1>
-   <input type="text" id="codeInput" placeholder="..." />
-   <div id="message"><a href="https://example.com">correct.</a></div>
- 
-   <script>
-     const input = document.getElementById('codeInput');
-     const message = document.getElementById('message');
-     const correctCode = "fractured";
- 
-     input.addEventListener('keypress', function (e) {
-       if (e.key === 'Enter') {
-         if (input.value.toLowerCase().trim() === correctCode) {
-           message.style.display = 'block';
-         } else {
-           input.value = '';
-           input.placeholder = 'wrong.';
-         }
-       }
-     });
-   </script>
- </body>
- </html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>1/5</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000000;
+      color: #e0e0e0;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #dcdcdc;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      outline: none;
+      width: 300px;
+      text-align: center;
+      background-color: #2a2a2a;
+      color: #ffffff;
+    }
+
+    input[type="text"]::placeholder {
+      color: #888;
+    }
+
+    #message {
+      margin-top: 20px;
+      display: none;
+    }
+
+    #message a {
+      color: #87ff87;
+      text-decoration: none;
+    }
+
+    #message a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="question">do you know what this is?</h1>
+  <input type="text" id="codeInput" placeholder="..." />
+  <div id="message"><a href="https://example.com">correct.</a></div>
+
+  <script>
+    const input = document.getElementById('codeInput');
+    const message = document.getElementById('message');
+    const question = document.getElementById('question');
+
+    const questions = [
+      {
+        text: "do you know what this is?",
+        accepted: ["yes", "maybe", "i think so", "no", "not really"]
+      },
+      {
+        text: "can i trust you?",
+        accepted: ["yes", "i hope so", "you can", "yeah"]
+      },
+      {
+        text: "i need your full attention.",
+        accepted: ["okay", "ok", "okay?", "ok?", "i'm listening", "im listening", "yes", "no", "okie", "oki", "go on"]
+      },
+      {
+        text: "are you *really* listening?",
+        accepted: ["yes", "i am", "i think so"]
+      },
+    ];
+
+    let step = 0;
+
+    input.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        const userInput = input.value.toLowerCase().trim();
+        input.value = '';
+
+        if (step < questions.length - 1) {
+          const acceptedAnswers = questions[step].accepted.map(ans => ans.toLowerCase());
+          if (acceptedAnswers.includes(userInput)) {
+            step++;
+            question.textContent = questions[step].text;
+          } else {
+            input.placeholder = "wrong.";
+          }
+        } else {
+          // Final question (actual riddle)
+          if (userInput === questions[step].answer) {
+            message.style.display = 'block';
+            input.style.display = 'none';
+            question.textContent = "the next test's link is my status on discord. copy it, and replace 'puzzle_01' with the code.";
+          } else {
+            input.placeholder = "wrong.";
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
