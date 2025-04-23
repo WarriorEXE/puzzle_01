@@ -73,6 +73,10 @@
         accepted: ["yes", "i hope so", "you can", "yeah"]
       },
       {
+        text: "what you're about to see is private, and unless you complete this without cheating, you don't deserve to see it.",
+        accepted: ["yes", "okay", "ok", "go on", "?"]
+      },
+      {
         text: "i need your full attention.",
         accepted: ["okay", "ok", "okay?", "ok?", "i'm listening", "im listening", "yes", "no", "okie", "oki", "go on"]
       },
@@ -94,17 +98,12 @@
           if (acceptedAnswers.includes(userInput)) {
             step++;
             question.textContent = questions[step].text;
-          } else {
-            input.placeholder = "wrong.";
-          }
         } else {
           // Final question (actual riddle)
           if (userInput === questions[step].answer) {
             message.style.display = 'block';
             input.style.display = 'none';
-            question.textContent = "the next test's link is my status on discord. copy it, and replace 'puzzle_01' with the code.";
-          } else {
-            input.placeholder = "wrong.";
+            question.textContent = "the test starts now. copy my status on discord, and replace this link's 'puzzle_01' with the code.";
           }
         }
       }
