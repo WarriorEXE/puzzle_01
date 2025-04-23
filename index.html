@@ -37,16 +37,6 @@
     input[type="text"]::placeholder {
       color: #888;
     }
-
-    .fade {
-      transition: opacity 1s;
-      opacity: 1;
-    }
-
-    .hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
   </style>
 </head>
 <body>
@@ -82,7 +72,7 @@
 
     let step = 0;
 
-    input.addEventListener('keypress', function (e) {
+    input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
         const userInput = input.value.toLowerCase().trim();
         input.value = '';
@@ -93,11 +83,10 @@
           if (step < questions.length) {
             question.textContent = questions[step].text;
           } else {
-            // all questions answered → go to real test
             question.textContent = "good.";
             input.placeholder = "redirecting...";
             setTimeout(() => {
-              window.location.href = "riddle.html"; // change this to your actual next page
+              window.location.href = "riddle.html"; // change this to the actual link
             }, 2000);
           }
         } else {
